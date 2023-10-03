@@ -26,6 +26,7 @@ def export_table(accuracies, model_names, filename):
     while True:
         try:
             old_score = pd.read_csv(filename)
+            break
         except pd.errors.EmptyDataError:
             print('error 1')
             old_score = dict()
@@ -37,6 +38,7 @@ def export_table(accuracies, model_names, filename):
             print('error 2')
             old_score = open(filename, 'a')
             old_score.close()
+
 
     new_score = pd.DataFrame()
 

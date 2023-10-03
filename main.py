@@ -17,7 +17,10 @@ def main():
 
     output_file = pd.read_csv('creditcard_2023.csv')
 
-    trained_model = train_one_model(output_file, RandomForestClassifier(), 30_000)['model']
+    print('Training last model')
+    trained_model = train_one_model(output_file, RandomForestClassifier(), 20_000)['model']
+
+    print('Exporting last model')
     joblib.dump(trained_model, 'trained_model.joblib')
     print('The model RandomForestClassifier was exported successfully.')
 
