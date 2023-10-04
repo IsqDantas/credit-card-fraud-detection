@@ -7,6 +7,7 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import RidgeClassifier, Perceptron
 from sklearn.tree import DecisionTreeClassifier
+import joblib
 
 
 def make_histogram_graphic(data_base_path):
@@ -22,7 +23,27 @@ def make_histogram_graphic(data_base_path):
     print(avg)
 
 
-def export_table(accuracies, model_names, filename):
+def export_comparing_table(train_table, model_path, number_of_rows, table_path):
+    model = joblib.load(model_path)
+    table = pd.read_csv(train_table)
+
+    x, y = separate_table(table, number_of_rows)
+    prediction = model.predict(x)
+
+    print(x)
+    print(x.columns)
+
+    export_table = {
+        'Amount': x['Amount'],
+        'Prediction': prediction,
+        'Real values': y
+    }
+
+    export_table = pd.DataFrame(export_table)
+    export_table.to_csv(table_path, index=False)
+
+
+def export_train_table(accuracies, model_names, filename):
     while True:
         try:
             old_score = pd.read_csv(filename)
@@ -39,7 +60,6 @@ def export_table(accuracies, model_names, filename):
             old_score = open(filename, 'a')
             old_score.close()
 
-
     new_score = pd.DataFrame()
 
     for accuracy, modelo in zip(accuracies, model_names):
@@ -49,10 +69,16 @@ def export_table(accuracies, model_names, filename):
     score.to_csv(filename, index=False)
 
 
+def separate_table(table, number_of_rows):
+    table = table.sample(n=number_of_rows)
+    x = table.drop(columns='Class')
+    y = table['Class']
+
+    return x, y
+
+
 def train_one_model(train_table, model, number_of_rows):
-    train_table = train_table.sample(n=number_of_rows)
-    x = train_table.drop(columns='Class')
-    y = train_table['Class']
+    x, y = separate_table(train_table, number_of_rows)
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
 
     model.fit(x_train, y_train)
@@ -99,11 +125,15 @@ def train_all_models(data_base_path, accuracy_path, number_of_rows, number_of_tr
             print()
         print('-' * 12, end='\n\n')
 
-        export_table(accuracies, model_names, accuracy_path)
+        export_train_table(accuracies, model_names, accuracy_path)
 
 
 def main():
-    make_histogram_graphic('score-100-trains-40000-db-rows.csv')
+    # make_histogram_graphic('score-100-trains-40000-db-rows.csv')
+    export_comparing_table('creditcard_2023.csv',
+                           'trained_model.joblib',
+                           15,
+                           'comparing-model-results.csv')
 
 
 if __name__ == '__main__':
