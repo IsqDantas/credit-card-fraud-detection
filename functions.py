@@ -90,7 +90,7 @@ def train_all_models(data_base_path, accuracy_path, number_of_rows, number_of_tr
         accuracies = []
 
         for model, model_name in zip(models, model_names):
-            print(f'#{i + 1} - Testing {model_name}')
+            print(f'#{i + 1} - Training {model_name}')
 
             accuracy = train_one_model(table, model, number_of_rows)['accuracy']
             accuracies.append(accuracy)
@@ -103,7 +103,7 @@ def train_all_models(data_base_path, accuracy_path, number_of_rows, number_of_tr
 
 
 def main():
-    make_histogram_graphic('scoring.csv')
+    make_histogram_graphic('score-100-trains-40000-db-rows.csv')
 
 
 if __name__ == '__main__':

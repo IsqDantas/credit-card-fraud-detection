@@ -10,8 +10,8 @@ def main():
     output_file = 'score-test.csv'
     train_all_models('creditcard_2023.csv',
                      output_file,
-                     1_000,
-                     1)
+                     30_000,
+                     5)
 
     make_histogram_graphic(output_file)
 
