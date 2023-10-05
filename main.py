@@ -2,27 +2,31 @@ from functions import (train_all_models,
                        train_one_model,
                        make_histogram_graphic)
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import Perceptron
 import pandas as pd
 import joblib
 
 
 def main():
     output_file = 'score-test.csv'
-    train_all_models('creditcard_2023.csv',
-                     output_file,
-                     30_000,
-                     5)
+    # train_all_models('creditcard_2023.csv',
+    #                  output_file,
+    #                  30_000,
+    #                  5)
 
-    make_histogram_graphic(output_file)
+    # make_histogram_graphic(output_file)
 
     output_file = pd.read_csv('creditcard_2023.csv')
 
     print('Training last model')
-    trained_model = train_one_model(output_file, RandomForestClassifier(), 20_000)['model']
+    random_forest_model = train_one_model(output_file, RandomForestClassifier(), 40_000)['model']
+    perceptron_model = train_one_model(output_file, Perceptron(), 40_000)['model']
 
     print('Exporting last model')
-    joblib.dump(trained_model, 'trained_model.joblib')
+    joblib.dump(random_forest_model, 'RandomForest-40000.joblib')
+    joblib.dump(perceptron_model, 'Perceptron-40000.joblib')
     print('The model RandomForestClassifier was exported successfully.')
+    print('The model Perceptron was exported successfully.')
 
 
 if __name__ == '__main__':

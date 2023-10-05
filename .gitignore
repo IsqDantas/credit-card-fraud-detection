@@ -1,5 +1,7 @@
+**/env/
 creditcard_2023.csv
 score-100-trains-40000-db-rows.csv
 score-test.csv
 scoring.csv
 trained_model.joblib
+*.pyc
