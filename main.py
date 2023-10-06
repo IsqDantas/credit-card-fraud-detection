@@ -11,12 +11,12 @@ import joblib
 
 def main():
     output_file = 'score-test.csv'
-    # train_all_models('creditcard_2023.csv',
-    #                  output_file,
-    #                  30_000,
-    #                  5)
+    train_all_models('creditcard_2023.csv',
+                     output_file,
+                     10_000,
+                     2)
 
-    # make_histogram_graphic(output_file)
+    make_histogram_graphic(output_file)
 
     output_file = pd.read_csv('creditcard_2023.csv')
 
@@ -26,12 +26,14 @@ def main():
 
     print('Exporting last model')
     joblib.dump(random_forest_model, 'RandomForest-40000.joblib')
-    joblib.dump(perceptron_model, 'Perceptron-40000.joblib')
     print('The model RandomForestClassifier was exported successfully.')
-    print('The model Perceptron was exported successfully.')
-    display(pd.read_csv("comparing-model-results.csv"))
 
-make_table('comparing-model-results.csv')
+    joblib.dump(perceptron_model, 'Perceptron-40000.joblib')
+    print('The model Perceptron was exported successfully.')
+
+    display(pd.read_csv("comparing-model-results.csv"))
+    make_table('comparing-model-results.csv')
+
 
 if __name__ == '__main__':
     main()
