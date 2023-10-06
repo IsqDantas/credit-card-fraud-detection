@@ -151,11 +151,11 @@ def train_all_models(data_base_path, accuracy_path, number_of_rows, number_of_tr
 
 
 def main():
-    # make_histogram_graphic('score-100-trains-40000-db-rows.csv')
-    # export_comparing_table('creditcard_2023.csv',
-    #                        'trained_model.joblib',
-    #                        15,
-    #                        'comparing-model-results.csv')
+    make_histogram_graphic('score-100-trains-40000-db-rows.csv')
+    export_comparing_table('creditcard_2023.csv',
+                           'Perceptron-40000.joblib',
+                           15,
+                           'comparing-model-results.csv')
     make_table('comparing-model-results.csv')
 
 

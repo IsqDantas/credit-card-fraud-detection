@@ -5,7 +5,6 @@ from functions import (train_all_models,
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import Perceptron
 import pandas as pd
-from IPython.display import display
 import joblib
 
 
@@ -13,8 +12,8 @@ def main():
     output_file = 'score-test.csv'
     train_all_models('creditcard_2023.csv',
                      output_file,
-                     10_000,
-                     2)
+                     30_000,
+                     5)
 
     make_histogram_graphic(output_file)
 
@@ -25,13 +24,13 @@ def main():
     perceptron_model = train_one_model(output_file, Perceptron(), 40_000)['model']
 
     print('Exporting last model')
-    joblib.dump(random_forest_model, 'RandomForest-40000.joblib')
+    joblib.dump(random_forest_model, 'RandomForest-30000.joblib')
     print('The model RandomForestClassifier was exported successfully.')
 
-    joblib.dump(perceptron_model, 'Perceptron-40000.joblib')
+    joblib.dump(perceptron_model, 'Perceptron-30000.joblib')
     print('The model Perceptron was exported successfully.')
 
-    display(pd.read_csv("comparing-model-results.csv"))
+    print(pd.read_csv("comparing-model-results.csv"))
     make_table('comparing-model-results.csv')
 
 
