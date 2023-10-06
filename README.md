@@ -11,3 +11,6 @@ Instructions, download, features and description are above.
 
 - Programming language: Python
 - Packages: Pandas, Scikit-Learn, Plotly, Joblib, and others
+
+## Slide
+- https://www.canva.com/design/DAFvputNM0s/hun4DcJyZ44fMgbBAv2n0A/edit
