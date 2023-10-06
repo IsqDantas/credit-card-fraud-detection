@@ -7,6 +7,7 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import RidgeClassifier, Perceptron
 from sklearn.tree import DecisionTreeClassifier
+from dash import Dash, html, dash_table
 import joblib
 
 
@@ -21,8 +22,7 @@ def make_histogram_graphic(data_base_path):
     figure = px.histogram(avg, title="model's accuracy", x='accuracy', y='model', color='model')
     figure.show()
     print(avg)
-
-
+    
 def export_comparing_table(train_table, model_path, number_of_rows, table_path):
     model = joblib.load(model_path)
     table = pd.read_csv(train_table)
@@ -41,8 +41,7 @@ def export_comparing_table(train_table, model_path, number_of_rows, table_path):
 
     export_table = pd.DataFrame(export_table)
     export_table.to_csv(table_path, index=False)
-
-
+    
 def export_train_table(accuracies, model_names, filename):
     while True:
         try:
@@ -135,6 +134,29 @@ def main():
                            15,
                            'comparing-model-results.csv')
 
-
+def make_table(table_path):
+    df = pd.read_csv(table_path)
+    external_stylesheets = ['assets/css/style.css']
+    app = Dash(__name__, external_stylesheets=external_stylesheets)
+    app.layout = html.Div([
+        html.Div(children="Model test", style={'fontSize': '24px', 'textAlign': 'center'}),
+        dash_table.DataTable(data=df.to_dict('records'),
+                             style_cell={'textAlign': 'center'},
+                             page_size=15,
+                             style_data={
+                                 'backgroundColor': 'rgb(30, 30, 30)',
+                                 'fontSize': '18px',
+                                 'width': '50px'
+                            
+                             },
+                             style_header={
+                                 'backgroundColor': 'rgb(50, 50, 50)',
+                                 'fontWeight': 'bold',
+                                 'border': '1px solid white'
+                             })
+    ])
+    
+    app.run(debug=True)
+    
 if __name__ == '__main__':
     main()

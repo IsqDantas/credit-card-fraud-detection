@@ -1,9 +1,11 @@
 from functions import (train_all_models,
                        train_one_model,
-                       make_histogram_graphic)
+                       make_histogram_graphic,
+                       make_table)
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import Perceptron
 import pandas as pd
+from IPython.display import display
 import joblib
 
 
@@ -27,7 +29,10 @@ def main():
     joblib.dump(perceptron_model, 'Perceptron-40000.joblib')
     print('The model RandomForestClassifier was exported successfully.')
     print('The model Perceptron was exported successfully.')
+    display(pd.read_csv("comparing-model-results.csv"))
 
+make_table('comparing-model-results.csv')
 
 if __name__ == '__main__':
     main()
+    make_table()
